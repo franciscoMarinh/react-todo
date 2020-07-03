@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Redirect, Route } from 'react-router-dom'
-
-const PrivateRouter = ({ component: Component, ...rest }) => (
+import { connect } from 'react-redux'
+const PrivateRouter = ({ component: Component, token, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      localStorage.getItem('token') ? (
+      token ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -25,6 +25,11 @@ const PrivateRouter = ({ component: Component, ...rest }) => (
 
 PrivateRouter.propTypes = {
   component: PropTypes.func.isRequired,
+  token: PropTypes.string,
 }
 
-export default PrivateRouter
+const mapStateToProps = (state) => ({
+  token: state.main.token,
+})
+
+export default connect(mapStateToProps)(PrivateRouter)

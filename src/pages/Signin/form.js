@@ -106,6 +106,7 @@ Form.propTypes = {
   attempsAuth: PropTypes.func,
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(Actions, dispatch)
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ attempsAuth: Actions.attempsAuth }, dispatch)
 
 export default connect(null, mapDispatchToProps)(Form)

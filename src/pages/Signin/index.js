@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Copyright } from '../../commons/components/copyright'
 import Form from './form'
 
+import CircularIndeterminate from '../../commons/components/lazyLoad'
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -31,6 +33,8 @@ function SignIn(props) {
   React.useEffect(() => {
     if (props.token) props.history.push('/page')
   }, [props.token])
+
+  return <CircularIndeterminate />
 
   return (
     <Container component='main' maxWidth='xs'>

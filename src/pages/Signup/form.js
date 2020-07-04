@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -8,6 +8,10 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom'
+
+import { Creators as Actions } from '../../store/ducks/main'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -25,7 +29,7 @@ const initialState = {
   email: '',
   password: '',
 }
-export default function Form() {
+function Form(props) {
   const classes = useStyles()
   const history = useHistory()
 
@@ -40,8 +44,15 @@ export default function Form() {
     history.push('/')
   }
 
+  React.useEffect(() => {}, [])
+
   const submitRequest = (e) => {
     e.preventDefault()
+    props.attempsRegister({
+      name: state.name,
+      email: state.email,
+      password: state.password,
+    })
     setState(initialState)
   }
 
@@ -105,7 +116,7 @@ export default function Form() {
         <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox value='allowExtraEmails' color='primary' />}
-            label='Quero receber inspiração, promoções de marketing e atualizações por e-mail.'
+            label='Quero receber notificações, promoções de marketing e atualizações por e-mail.'
           />
         </Grid>
       </Grid>
@@ -129,3 +140,12 @@ export default function Form() {
     </form>
   )
 }
+
+Form.propTypes = {
+  attempsRegister: PropTypes.func,
+}
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ attempsRegister: Actions.attempsRegister }, dispatch)
+
+export default connect(null, mapDispatchToProps)(Form)

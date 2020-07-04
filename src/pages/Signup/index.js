@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
@@ -8,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Form from './form'
+import { connect } from 'react-redux'
 
 import { Copyright } from '../../commons/components/copyright'
 
@@ -24,8 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SignUp() {
+function SignUp(props) {
   const classes = useStyles()
+
+  React.useEffect(() => {
+    if (props.token) props.history.push('/page')
+  }, [props.token])
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -45,3 +51,14 @@ export default function SignUp() {
     </Container>
   )
 }
+
+SignUp.propTypes = {
+  history: PropTypes.object,
+  token: PropTypes.string,
+}
+
+const mapStateToProps = (state) => ({
+  token: state.main.token,
+})
+
+export default connect(mapStateToProps)(SignUp)

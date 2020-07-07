@@ -1,6 +1,6 @@
 export const Types = {
   SET_TOKEN: 'root/SET_TOKEN',
-  ASYNC_SET_TOKEN_SAGA: 'root/ASYNC_SET_TOKEN_SAGA',
+  ASYNC_LOGIN_SAGA: 'root/ASYNC_LOGIN_SAGA',
   ASYNC_REGISTER_SAGA: 'root/ASYNC_REGISTER_SAGA',
 }
 
@@ -15,7 +15,6 @@ export default function RootReducer(state = initialState, action) {
         ...state,
         token: action.payload.token,
       }
-
     default:
       return state
   }
@@ -23,7 +22,7 @@ export default function RootReducer(state = initialState, action) {
 
 export const Creators = {
   attempsAuth: (payload) => ({
-    type: Types.ASYNC_SET_TOKEN_SAGA,
+    type: Types.ASYNC_LOGIN_SAGA,
     payload,
   }),
   attempsRegister: (payload) => ({

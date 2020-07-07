@@ -34,23 +34,27 @@ function SignIn(props) {
     if (props.token) props.history.push('/page')
   }, [props.token])
 
-  return <CircularIndeterminate />
-
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Login
-        </Typography>
-      </div>
-      <Form />
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      {props.loading ? (
+        <CircularIndeterminate />
+      ) : (
+        <>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component='h1' variant='h5'>
+              Login
+            </Typography>
+          </div>
+          <Form />
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </>
+      )}
     </Container>
   )
 }
@@ -58,10 +62,12 @@ function SignIn(props) {
 SignIn.propTypes = {
   history: PropTypes.object,
   token: PropTypes.string,
+  loading: PropTypes.bool,
 }
 
-const mapStateToProps = (state) => ({
-  token: state.main.token,
+const mapStateToProps = (store) => ({
+  token: store.main.token,
+  loading: store.app.loading,
 })
 
 export default connect(mapStateToProps)(SignIn)

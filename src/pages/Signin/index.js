@@ -31,7 +31,7 @@ function SignIn(props) {
   const classes = useStyles()
 
   React.useEffect(() => {
-    if (props.token) props.history.push('/page')
+    if (props.token) props.history.push('/home')
   }, [props.token])
 
   return (
